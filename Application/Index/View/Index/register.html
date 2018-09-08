@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>360全景图</title>
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<!-- 启用webAPP全屏模式-->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- 隐藏状态栏或者设置状态栏的颜色-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- 禁止缓存访问页面-->
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="applicable-device" content="mobile">
+<!-- 页面关键词-->
+<link rel="stylesheet" href="__LAYUI__/css/layui.css">
+<script src="__JS__/jquery-3.3.1.js"></script>
+<script src="__LAYUI__/layui.js"></script>
+
+
+<!--[if IE]>
+<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+<![endif]-->
+<style>
+
+</style>
+</head>
+<body>
+
+<form class="layui-form" action="{:U('register')}" method="POST" enctype="multipart/form-data">
+  <div class="layui-form-item">
+    <label class="layui-form-label"></label>
+    <div class="layui-input-block">
+      <input type="text" name="name" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" name="telephone" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  	<button type="button" class="layui-btn" id="test1">
+	  <i class="layui-icon">&#xe67c;</i>上传图片
+	</button>
+	<input type="hidden" name="faceImage" value="" id="faceImage"/>
+	<img src=""  style="width:150px" style="display: none" id="scan"/>
+ 
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+     
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+  	console.log(data);
+    // layer.msg(JSON.stringify(data.field));
+   
+    $.post("{:U('register')}",data.field,function(res){
+    	console.info(res);
+    })
+  });
+
+
+});
+
+layui.use('upload', function(){
+  var upload = layui.upload;
+   
+  //执行实例
+  var uploadInst = upload.render({
+    elem: '#test1' //绑定元素
+    ,url: "{:U('upload')}" //上传接口
+    ,done: function(res){
+      //上传完毕回调
+      console.info(res);
+      $('#faceImage').val(res.url);
+      $('#scan').show();
+    }
+    ,error: function(){
+      //请求异常回调
+    }
+  });
+});
+
+</script>
+         
+</body>
+</html>
