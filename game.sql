@@ -15,10 +15,6 @@ Date: 2018-09-08 18:07:37
 
 SET FOREIGN_KEY_CHECKS=0;
 
--- ----------------------------
--- Table structure for only_meeting
--- ----------------------------
-DROP TABLE IF EXISTS `only_meeting`;
 CREATE TABLE `only_meeting` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `token` char(16) DEFAULT NULL COMMENT '百度签到平台会议toke',
@@ -31,20 +27,16 @@ CREATE TABLE `only_meeting` (
   `bdImage` text COMMENT '签到背景图',
   `signinSuccessTip` varchar(50) DEFAULT NULL COMMENT '签到成功提示语',
   `signinFailTip` varchar(50) DEFAULT NULL COMMENT '签到失败提示语',
+  `current` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 当前的会议 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of only_meeting
--- ----------------------------
-INSERT INTO `only_meeting` VALUES ('5', 'z9FYdEeDRF0d8Diq', 'http://bj.bcebos.com/v1/aip-web/', '11786317', '黑客松编程大赛宣讲', '黑客松编程大赛宣讲黑客松编程大赛宣讲黑客松编程大赛宣讲', '1536249600', '1538236800', '', '签到成功', '签到失败');
 
--- ----------------------------
--- Table structure for only_user
--- ----------------------------
-DROP TABLE IF EXISTS `only_user`;
+
+
 CREATE TABLE `only_user` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `meeting_token` char(16) DEFAULT NULL COMMENT '对应的会议',
   `name` varchar(50) NOT NULL COMMENT '姓名',
   `telephone` char(11) NOT NULL COMMENT '手机号',
   `faceImage` varchar(255) NOT NULL COMMENT '人脸图片，这里存url',
@@ -52,9 +44,6 @@ CREATE TABLE `only_user` (
   `qrcode` char(32) DEFAULT NULL COMMENT '会议签到备用二维码值',
   `qrcodeUrl` text COMMENT '会议签到备用二维图片',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of only_user
--- ----------------------------
-INSERT INTO `only_user` VALUES ('3', 'dengying', '18380448389', '/Uploads/20180908/5b935ec9c07f5.jpg', '0', null, null);
+

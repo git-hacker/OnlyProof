@@ -7,6 +7,7 @@ class ApiController extends Controller{
 	//人脸验证接口
 	public function verify($params = array())
 	{
+		// params is invalid
 		$params = json_decode($params,true);
 		if( isset($params['token']) &&  ( isset($params['faceImage']) || isset($params['qrcode']) ) ){
 

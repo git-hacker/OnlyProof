@@ -6,11 +6,22 @@ class IndexController extends Controller{
 
 	public function index()
 	{
-		// echo '开始你的代码之旅吧！';
-		echo md5('The One'); //0ad6123666a9f71b1816220a1912e9df
+		//再次进入页面，怎么找到自己的信息
+
+		//找到当前正在用的会议，找到里面的用户，怎么去确认就是自己
+
+		//根据人脸得到当前的报名信息（名片），与扫描他人一样？
+
 	}
+	//登录
+	public function logo()
+	{
+		//传入人脸图片
+		//返回名片，而不是签到
+		
 
-
+		
+	}
 	//注册页面
 	public function register()
 	{
@@ -30,6 +41,8 @@ class IndexController extends Controller{
 			if(empty($meeting_token)){
 				$meeting_token = M('meeting')->order('id desc')->getField('token');
 			}
+			if(empty($meeting_token)) $this->error( 'meeting token is invalid' );
+			
 
 			//获取图片的base64编码字符串
 			$img_base64 = imgToBase64( dirname(__FILE__) . $faceImage );
@@ -65,7 +78,7 @@ class IndexController extends Controller{
 			}else{
 				$res['result'] = json_decode($res['result'],true);
 
-				if( M('user')->where(['id' => $uUserId])->update(['applyId' => $res['result']['applyId'] ,'qrcode' => $res['result']['qrcode'] , 'qrcodeUrl' => $res['result']['qrcodeUrl']]) !== false){
+				if( M('user')->where(['id' => $uUserId])->update(['meeting_token' => $meeting_token,'applyId' => $res['result']['applyId'] ,'qrcode' => $res['result']['qrcode'] , 'qrcodeUrl' => $res['result']['qrcodeUrl']]) !== false){
 
 					$result = array('status' => 1, 'info' => '注册成功' , 
 						'qrcode' => $res['result']['qrcode'] , 'qrcodeUrl' => $res['result']['qrcodeUrl'] , 'faceImage' => $faceImage
