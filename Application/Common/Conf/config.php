@@ -21,7 +21,7 @@ return array(
     ),
     
     'DATA_CACHE_TYPE' => 'Redis', //缓存方式
-    'LOAD_EXT_CONFIG' => 'db', //差异化配置
+    'LOAD_EXT_CONFIG' => 'db,common', //差异化配置
 
     'DOCUMENT_ROOT' => '/data/wwwroot/phperror.cn'
 );
