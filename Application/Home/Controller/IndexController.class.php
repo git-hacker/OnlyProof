@@ -2,7 +2,31 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-    public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
-    }
+    //1. 会议操作接口【后台管理系统功能】
+	public function create_meeting()
+	{
+		// header("Content-Type:application/json");
+		$type = 'qiandao';
+		$token = access_token($type);
+
+		$url = 'https://aip.baidubce.com/api/v1/solution/direct/meeting/project?access_token='.$token;
+
+		$bodys = array(
+			"uProjectId"       => 1001, //自己的主键
+			"gId"              => C('baidu.'.$type)['API_Id'],
+			"name"             => "会议名称",
+			"desc"             => "会议描述",
+			"startTime"        => "1536249600000",
+			"endTime"          => "1538236800000",
+			"headImage"        => "", //不支持自定义
+			"bgImage"          => "", //背景图，可自定义
+			"signinSuccessTip" => "签到成功",
+			"signinFailTip"    => "签到失败",
+			"interactType"     => 0
+		);
+		// $bodys = json_encode($bodys);
+		$res = request_post($url, $bodys);
+		var_dump($res);
+	}
+
 }
