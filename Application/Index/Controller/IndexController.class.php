@@ -8,7 +8,7 @@ class IndexController extends Controller{
 	public function index()
 	{
 		$date = date('Y-m-d');
-		$time = date('H:i:s');
+		$time = date('H:i');
 		$this->assign('date',$date);
 		$this->assign('time',$time);
 		$my = getMyInfo();
@@ -34,10 +34,10 @@ class IndexController extends Controller{
 		 	if(!$uUserId) $this->error('制作失败');
 
 		 	//测试
-		 	// $data['id'] = $uUserId;
-		 	// session("user_info" , json_encode($data));
-	 		// $this->success('制作成功',U('my'));
-	 		// exit;
+		 	$data['id'] = $uUserId;
+		 	session("user_info" , json_encode($data));
+	 		$this->success('制作成功',U('my'));
+	 		exit;
 		 	
 			//百度签到平台的token
 			$meeting_token = S('robot_meeting_token');
@@ -126,6 +126,8 @@ class IndexController extends Controller{
     	}else if( isset($my['code']) && $my['code']){
     		$my['pic'] = $my['code'];
     	}
+    	// var_dump($my);
+    	// exit;
     	$this->assign('my', $my);
   		$this->display();
     }

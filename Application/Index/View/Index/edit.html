@@ -19,7 +19,7 @@
 <i class="icon03 iconCircle"></i>
 <i class="icon04 iconCircle"></i>
 <i class="icon05"><img src="__IMG__/2@2x.png" /></i>
-<h4 class="h4 title2">制作独一无二的名片</h4>
+<h4 class="h4 title2">制作您的专属名片</h4>
 
 <form method="POST" enctype="multipart/form-data">
   <div class="form">
@@ -33,9 +33,10 @@
     </div>
   </div>
   <input type="hidden" name="uid" value="{$my.id}"/>
-
-  <div class="txt_center form-button"><button class="submit" onclick="save(this);return false;">确认</button></div>
-   <div class="txt_center form-button"><button class="submit" onclick=" history.go(-1); return false;">返回</button></div>
+  <div class="txt_center form-button" style="margin-top:50px;">
+    <button class="submit" style="margin-right:34px;" onclick="save(this);return false;">确认修改</button>
+    <button class="submit" onclick=" history.go(-1); return false;">查看名片</button>
+  </div>
 
 </form>
 
@@ -44,9 +45,8 @@
 function save(e) {
   var name = $('input[name="name"]').val();
   var telephone = $('input[name="telephone"]').val();
-
-   var form = $('form').serialize();
-   $.post("{:U('edit')}",form,function(res){
+  var form = $('form').serialize();
+  $.post("{:U('edit')}",form,function(res){
       if(res && res.status == 1){
         location.href = res.url;
       }else{

@@ -32,8 +32,8 @@ body{min-width:320px;font-family:'microsoft yahei',Verdana,Arial,Helvetica,sans-
 }
 /*common*/
 .hidden{display: none;}
-.float_l{float: left;display: inline;}
-.float_r{float: right;display: inline;padding-left:22px;}
+.float_l{float: left;display: inline;margin-right:22px;}
+.float_r{float: right;display: inline;}
 .color_orange{color: #ff9900}
 .color_green{color: #6bc839}
 .color_blue{color: #2e46f7}
@@ -63,13 +63,27 @@ a.but_small,.but_small{display: inline-block;width: auto;font-size:1.2em;padding
 .bodyDefault .href a{color:#017ffc;font-size: 28px;line-height: 28px;}
 .bodyDefault .href img{width:1em;}
 .bodyDefault02 .icon05{position: absolute;right: auto;bottom: 0;left: 0}
-.form{padding: 20px 0;width: 300px;margin: 0 auto}
-.item{padding-bottom: 30px;height:50px;}
-.inputBox{padding-left: 22px}
-.inputText{background: #e5edff;height: 25px;line-height: 25px;padding: 0 10px;border-radius: 20px;border:0 none}
+.form{margin: 0 auto;padding-left:20%;}
+.item{padding-bottom: 30px;}
+.inputText{padding-left: 10px;font-size:18px;background: #e5edff;width: 330px;height: 50px;line-height: 50px;padding: 0 10px;border-radius: 20px;border:0 none;}
 .uploadBoxs{ background: #e5edff;margin-left: 10px;display: inline-block;text-align: center;width:90px;height: 90px;color:#a5c9ec}
 .uploadBoxs img{padding: 30px 0 10px 0}
-.submit{color:white;font-size: 1.2em;background: #017ffc;padding:10px 30px;border-radius:30px;border: 0 none}
-.form-button{margin-top: 30px}
+.submit{color:white;font-size: 1.6em;background: #017ffc;width:180px;height:50px;line-height:50px;border-radius:30px;border: 0 none;margin-top:40px;}
 
+.faceImg{text-align: center}
+.p1{padding: 1em 0 0.5em 0;height:25px;line-height: 25px;font-size: 1.8em;}
+.p2{font-size: 1.8em;padding-bottom: 2em;height:25px;line-height: 25px;}
+.img img{width: 100px;height: 100px;border-radius: 100%}
 
+.ulbox{}
+.ulbox li{float: left;display: inline;width: 21%;padding: 0 2%;position: relative;}
+.ulbox img{width: 100%}
+.ulbox p{padding-top: 10px}
+.ulbox .del{position: absolute;right: 15px;bottom: 15px;}
+.ulbox .del img{width: 30px}
+
+input::-webkit-input-placeholder {
+     color: #b0d0ee;
+     font-size: 1.2em;
+     padding-left: 10px;
+ }
