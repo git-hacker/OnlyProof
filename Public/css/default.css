@@ -1,0 +1,74 @@
+@charset "utf-8";
+/*base 1em=20px*/
+*{margin:0; padding:0}
+ul,ol,li{list-style: none}
+h1,h2,h3,h4,h5,h6,em,i{font-style: normal;font-weight: normal;font-size: 1em}
+img{border:0;max-width: 100%}
+input,img{vertical-align: middle}
+table{border-collapse:collapse;border-spacing:0}
+a{text-decoration:none;color: #000}
+a:visited,a:hover{color: #000}
+pre{white-space: pre-wrap;word-wrap: break-word;padding: 0;margin: 0}
+.clear{height:0;clear:both;overflow:hidden}
+.clearfix:after{content: "\0020"; display: block; height: 0;clear: both; visibility: hidden}
+.clearfix{zoom: 1;}
+/*input[type=text],input[type=password]{border: 1px #a2cfe0 solid;background: white;height:38px;text-indent: 10px;width: 100%;border-radius: 0.3em;box-shadow:inset 0 1px 2px rgba(0,0,0,.1)}*/
+body,input,textarea,select,button,table {font-size:14px;line-height:1.25em}
+body{min-width:320px;font-family:'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;color:#002e59;background: #fff;-webkit-text-size-adjust:none}
+@media screen and (min-width:100px) {
+	.body {font-size:12px}
+}
+@media screen and (min-width:320px) {
+	.body {font-size:14px}
+}
+@media screen and (min-width:480px) {
+	.body {font-size:16px}
+}
+@media screen and (min-width:640px){
+	.body {font-size:20px;}
+}
+@media screen and (min-width:1024px){
+	.body {font-size:32px}
+}
+/*common*/
+.hidden{display: none;}
+.float_l{float: left;display: inline;}
+.float_r{float: right;display: inline;}
+.color_orange{color: #ff9900}
+.color_green{color: #6bc839}
+.color_blue{color: #2e46f7}
+.color_red{color: red}
+.txt_center{text-align: center;}
+.txt_right{text-align: right;}
+a.but_yellow,input.but_yellow,.but_yellow{display: block;width:100%;text-align: center;background: #ffab20;color:white;font-size:1.5em;border-radius: 1em;padding:0.9em 0;letter-spacing: 0.1em;}
+input.but_yellow{border: none;background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #ffab20), color-stop(1, #ffab20));line-height:0.5em;font-size: 1.7em;border-radius: 0.5em}
+a.but_white,.but_white{display: block;width:100%;text-align: center;background: white;color:#ffab20;font-size:1.5em;border-radius: 1em;padding:0.9em 0;letter-spacing: 0.1em;border: 1px #ffab20 solid}
+a.but_black,.but_black{display: block;width:100%;text-align: center;background: white;color:#999;font-size:1.5em;border-radius: 1em;padding:0.9em 0;letter-spacing: 0.1em;border: 1px #ccc solid}
+input.but_gray,a.but_gray,.but_gray{display: block;width:100%;text-align: center;background: #d0d0d0;color:#333;border-radius: 1em;padding:0.9em 0;letter-spacing: 0.1em;border: none;background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #d0d0d0), color-stop(1, #d0d0d0));line-height:0.5em;font-size: 1.7em;border-radius: 0.5em}
+a.but_small,.but_small{display: inline-block;width: auto;font-size:1.2em;padding:0.5em;border-radius: 0.5em;border:0}
+
+/*  */
+.bodyDefault{}
+.h4{text-align: center;padding:55px 0 20px 0;font-size: 1.2em}
+.p{padding: 10px 50px}
+.iconCircle{position: absolute;background: #c2dbfe;border-radius: 100%}
+.icon01{left: 40px;top: 40px;width: 40px;height: 40px;}
+.icon02{right: 100px;top: 400px;width: 50px;height: 50px;}
+.icon03{left: 40px;top:500px;width: 30px;height: 30px;}
+.icon04{left: 50px;bottom:200px;width: 20px;height: 20px;}
+.icon05{position: absolute;right: 0;bottom: 0}
+.icon05 img{width: 100%;}
+.bodyDefault .txt_right{padding-right: 50px}
+.bodyDefault .href a{color:#017ffc;}
+.bodyDefault .href img{width:1em;}
+.bodyDefault02 .icon05{position: absolute;right: auto;bottom: 0;left: 0}
+.form{padding: 20px 0;width: 300px;margin: 0 auto}
+.item{padding: 10px}
+.inputBox{padding-left: 10px}
+.inputText{background: #e5edff;height: 25px;line-height: 25px;padding: 0 10px;border-radius: 20px;border:0 none}
+.uploadBoxs{ background: #e5edff;margin-left: 10px;display: inline-block;text-align: center;width:90px;height: 90px;color:#a5c9ec}
+.uploadBoxs img{padding: 30px 0 10px 0}
+.submit{color:white;font-size: 1.2em;background: #017ffc;padding:10px 30px;border-radius:30px;border: 0 none}
+.form-button{margin-top: 30px}
+
+

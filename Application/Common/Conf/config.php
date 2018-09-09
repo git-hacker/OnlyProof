@@ -6,10 +6,10 @@ return array(
     'DEFAULT_ACTION'        =>  'index', // 默认操作名称
 
     'SESSION_OPTIONS'       =>  array(), 
-    'SESSION_PREFIX'        =>  'robot_', 
+    'SESSION_PREFIX'        =>  'only_', 
 
     'URL_CASE_INSENSITIVE'  =>  false,   // 默认false 表示URL区分大小写 true则表示不区分大小写
-    'URL_MODEL'             =>  1,       // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
+    'URL_MODEL'             =>  2,       // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
 
     'TMPL_PARSE_STRING'  =>array(
 		'__UPLOAD__' => '/Uploads', //使用新的静态资源目录
