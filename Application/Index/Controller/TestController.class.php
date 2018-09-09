@@ -6,6 +6,7 @@ class TestController extends Controller{
 
 	public function ts($value='')
 	{
-		// $this->display('register2');
+		session('user_info' , false);
+		exit;
 	}
 }
