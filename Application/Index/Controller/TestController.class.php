@@ -6,6 +6,6 @@ class TestController extends Controller{
 
 	public function ts($value='')
 	{
-		$this->display('register2');
+		// $this->display('register2');
 	}
 }

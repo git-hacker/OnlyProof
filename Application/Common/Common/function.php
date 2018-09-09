@@ -66,7 +66,7 @@ function access_token( $type = 'qiandao')
  * @return string
  */
 function imgToBase64($img_file) {
-    var_dump($img_file);
+    // var_dump($img_file);
 
     $img_base64 = '';
     if (file_exists('.'.$img_file)) {

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <title>The One</title>
+  <link rel="stylesheet" href="__LAYUI__/css/layui.css">
+  <link rel="stylesheet" href="__CSS__/default.css">
+  <script src="__JS__/jquery-2.1.3.min.js"></script>
+  <script src="__LAYUI__/layui.js"></script>
+
+</head>
+<body class="bodyDefault bodyDefault02">
+<i class="icon01 iconCircle"></i>
+<i class="icon02 iconCircle"></i>
+<i class="icon03 iconCircle"></i>
+<i class="icon04 iconCircle"></i>
+<i class="icon05"><img src="__IMG__/2@2x.png" /></i>
+<h4 class="h4 title2">制作独一无二的名片</h4>
+
+<form method="POST" enctype="multipart/form-data">
+  <div class="form">
+    <div class="item clearfix">
+      <label class="float_l"><img src="__IMG__/name@2x.png" /></label>
+      <div class="inputBox float_l"><input type="text" class="inputText" name="name" value="{$my.name}"/></div>
+    </div>
+    <div class="item clearfix">
+        <label class="float_l"><img src="__IMG__/tel@2x.png" /></label>
+        <div class="inputBox float_l"><input type="text" class="inputText" name="telephone"value="{$my.telephone}" /></div>
+    </div>
+  </div>
+  <input type="hidden" name="uid" value="{$my.id}"/>
+
+  <div class="txt_center form-button"><button class="submit" onclick="save(this);return false;">确认</button></div>
+   <div class="txt_center form-button"><button class="submit" onclick=" history.go(-1); return false;">返回</button></div>
+
+</form>
+
+<script type="text/javascript">
+
+function save(e) {
+  var name = $('input[name="name"]').val();
+  var telephone = $('input[name="telephone"]').val();
+
+   var form = $('form').serialize();
+   $.post("{:U('edit')}",form,function(res){
+      if(res && res.status == 1){
+        location.href = res.url;
+      }else{
+        alert(res.info);
+      }
+      return false;
+   });
+}
+</script>
+</body>
+</html>

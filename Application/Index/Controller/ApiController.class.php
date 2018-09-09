@@ -24,21 +24,7 @@ class ApiController extends Controller{
 			}
 			$bodys = json_encode($bodys);
 			$res = request_post($url, $bodys);
-			var_dump($res);
-
-			// {
-			//     "log_id": 150087028516001,
-			//     "result": {
-			//         "applyId": 1,
-			//         "uprojectId":"1234567890", //自定义项目id
-			//         "uUserId":"1234567890", //自定义用户id
-			//         "userName":"张三", 
-			//         "data":"{'email':'zhangsan@163.com','username':'张三'}",
-			//         "bgImage":"http://xxxx.baidu.com", //背景图
-			//         "userImage":"http://xxxx.baidu.com" //用户人脸
-			//     }
-			// }
-
+			
 			// 把结果直接返回免费的签到app返回json
 			return $res;
 

@@ -61,6 +61,7 @@ class IndexController extends Controller{
 			);
 			$bodys = json_encode($bodys);
 			$res = request_post($url, $bodys);
+			$res = json_decode($res,true);
 			unset($bodys,$img_base64);
 
 			//把得到的数据保存进数据库，同时然后给前端 

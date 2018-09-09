@@ -26,28 +26,26 @@ class IndexController extends Controller {
 		$url = 'https://aip.baidubce.com/api/v1/solution/direct/meeting/project?access_token='.access_token('qiandao');
 		$bodys = array(
 			"uProjectId"       => $uProjectId, 
-			"gId"              => $gId,  //不要随意换这个值，会换人脸库的
+			"gId"              => '0ad6123666a9f71b1816220a1912e9df',  
 			"name"             => $data['name'],
 			"desc"             => $data['desc'],
 			"startTime"        => $data['startTime']*1000,
 			"endTime"          => $data['endTime']*1000,
 			"headImage"        => "", //不支持自定义
-			"bgImage"          => $data['bgImage'], //背景图，可自定义
+			"bgImage"          => $data['bgImage'] ? $data['bgImage'] :'', //背景图，可自定义
 			"signinSuccessTip" => $data['signinSuccessTip'],
 			"signinFailTip"    => $data['signinFailTip'],
 			"interactType"     => 0, //自动拉取签到成功信息
 		);
 		$bodys = json_encode($bodys);
 		$res = request_post($url, $bodys); 
-		var_dump($res);
-		
 		$res = json_decode($res,true);
 		
 		//存储创建会议的token 和 登录二维码
 		if( !$res || isset($res['error_code']) ){
 			//删除已有的数据
 			M('meeting')->where(['id' => $uProjectId])->delete();
-			$this->error( $res['error_msg'] );
+			echo  $res['error_msg'] ;
 		}else{
 			$res['result'] = json_decode($res['result'],true);
 
