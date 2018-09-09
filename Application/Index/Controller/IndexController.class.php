@@ -4,38 +4,41 @@ namespace Index\Controller;
 use Think\Controller;
 class IndexController extends Controller{
 
+	//首页
 	public function index()
 	{
-		//再次进入页面，怎么找到自己的信息
+		$date = date('Y-m-d');
+		$time = date('H:i:s');
+		$this->assign('date',$date);
+		$this->assign('time',$time);
+		$my = getMyInfo();
+		$url  = !empty($my) ? U('my') : U('register');
 
-		//找到当前正在用的会议，找到里面的用户，怎么去确认就是自己
+		$this->assign('url',$url);
+		$this->display();
 
-		//根据人脸得到当前的报名信息（名片），与扫描他人一样？
-
-	}
-	//登录
-	public function logo()
-	{
-		//传入人脸图片
-		//返回名片，而不是签到
-		
-
-		
 	}
 	//注册页面
 	public function register()
 	{
 		if(IS_POST){
+			$data['name'] = I('post.name','','strip_tags'); if(!$data['name']) $this->error('请填写用户名');
 
-			//将得到的name ,phone, faceImage 存入数据库
-			$name = I('post.name','','strip_tags'); if(!$name) $this->error('请填写用户名');
-
-			$telephone = I('post.telephone','','strip_tags'); 
-			if( !$telephone || !preg_match("/^1[345678]{1}\d{9}$/",$telephone) )  $this->error('请填写正确的手机号');
+			$data['telephone'] = I('post.telephone','','strip_tags'); 
+			if( !$data['telephone'] || !preg_match("/^1[345678]{1}\d{9}$/",$data['telephone']) )  $this->error('请填写正确的手机号');
 				
-			$faceImage = I('post.faceImage','','strip_tags');  if(!$faceImage) $this->error('请上传人脸照片');
-			$uUserId = M('user')->add(['name' => $name , 'telephone' => $telephone, 'faceImage' => $faceImage ]);
-	
+			$data['faceImage'] = I('post.faceImage','','strip_tags');  if(!$data['faceImage']) $this->error('请上传人脸照片');
+
+			$data['code'] = I('post.code','','strip_tags');
+			$uUserId = M('user')->add($data);
+		 	if(!$uUserId) $this->error('制作失败');
+
+		 	//测试
+		 	// $data['id'] = $uUserId;
+		 	// session("user_info" , json_encode($data));
+	 		// $this->success('制作成功',U('my'));
+	 		// exit;
+		 	
 			//百度签到平台的token
 			$meeting_token = S('robot_meeting_token');
 			if(empty($meeting_token)){
@@ -43,32 +46,22 @@ class IndexController extends Controller{
 			}
 			if(empty($meeting_token)) $this->error( 'meeting token is invalid' );
 			
-
 			//获取图片的base64编码字符串
-			$img_base64 = imgToBase64( dirname(__FILE__) . $faceImage );
+			$img_base64 = imgToBase64( $faceImage );
 
 			//调用接口注册
 			header("Content-Type:application/json");
 			$url   = 'https://aip.baidubce.com/api/v1/solution/direct/meeting/apply?access_token='.access_token('qiandao');
 			$bodys = array(
 				"uUserId"   => $uUserId,
-			    "name"      => $name,
-			    "token"     => $meeting_token, 
-			    "telephone" => $telephone,
+			    "name"      => $data['name'],
+			    "meeting_token"     => $meeting_token, 
+			    "telephone" => $data['telephone'],
 			    "faceImage" => $img_base64
 			);
 			$bodys = json_encode($bodys);
 			$res = request_post($url, $bodys);
-			var_dump($res);
-			exit;
-			// {
-			//     "log_id": 150087028516001,
-			//     "result": {
-			//         "applyId": 1,
-			//         "qrcode":"MnsfaaDb",
-			//         "qrcodeUrl":"http://xxxx.baidu.com"
-			//     }
-			// }
+			unset($bodys,$img_base64);
 
 			//把得到的数据保存进数据库，同时然后给前端 
 			if( !$res || isset($res['error_code']) ){
@@ -80,12 +73,16 @@ class IndexController extends Controller{
 
 				if( M('user')->where(['id' => $uUserId])->update(['meeting_token' => $meeting_token,'applyId' => $res['result']['applyId'] ,'qrcode' => $res['result']['qrcode'] , 'qrcodeUrl' => $res['result']['qrcodeUrl']]) !== false){
 
-					$result = array('status' => 1, 'info' => '注册成功' , 
-						'qrcode' => $res['result']['qrcode'] , 'qrcodeUrl' => $res['result']['qrcodeUrl'] , 'faceImage' => $faceImage
-					);
-					$this->ajaxReturn($result);
+					//更新信息
+					$data['id'] = $uUserId;
+					$data['qrcode']  =  $res['result']['qrcode'];
+					$data['qrcodeUrl'] =  $res['result']['qrcodeUrl'];
+					session('user_info' , json_encode($data) );
+					unset($data);
+
+					$this->success('制作成功',U('my'));
 				}else{
-					$this->error('注册失败');
+					$this->error('制作失败');
 				}
 			}
 		}else{
@@ -104,8 +101,6 @@ class IndexController extends Controller{
         $upload->saveName  =    array('uniqid','');
         // 上传文件 
         $info   =   $upload->upload();
-        // var_dump($info);exit;
-
         if(!$info) {// 上传错误提示错误信息
             $this->error($upload->getError());
         }else{ 
@@ -118,6 +113,74 @@ class IndexController extends Controller{
         	);
             $this->ajaxReturn($result);
         }
+    }
+
+    //显示自己的名片页
+    public function my()
+    {
+    	//获取我的信息
+    	$my = getMyInfo();
+    	if( isset($my['qrcodeUrl']) && $my['qrcodeUrl']){
+    		$my['pic'] = $my['qrcodeUrl'];
+    	}else if( isset($my['code']) && $my['code']){
+    		$my['pic'] = $my['code'];
+    	}
+    	$this->assign('my', $my);
+  		$this->display();
+    }
+
+    //隐私保护开启
+    public function safe()
+    {
+    	$status  = I('post.status' , 0, 'intval');
+    	$my = getMyInfo();
+    	if( M('user') -> where(['id' => $my['id'] ]) -> save( ['safety_on' => $status]) !== false){
+    		if($status == 1){
+    			$data = array('name' => $my['name']);
+    		}else{
+    			$data = array('name' => $my['name'], 'telephone' => $my['telephone'],'qrcodeUrl' => $my['qrcodeUrl']);
+    		}
+    		$this->ajaxReturn(['status' => 1,'info' =>'开启成功', 'data' => $data]);
+    	}else{
+    		$this->error('开启失败');
+    	}
+    }
+
+    //修改名片
+    public function edit()
+    {
+    	if(IS_POST){
+    		$my  = getMyInfo();
+
+			$uid = I('post.uid','','strip_tags'); 
+			$name = I('post.name','','strip_tags'); 
+			if( $name ){
+				$data['name'] = $name;
+				$my['name'] = $name;
+			}
+			$telephone= I('post.telephone','','strip_tags'); 
+			if( $telephone && !preg_match("/^1[345678]{1}\d{9}$/",$telephone) )  $this->error('请填写正确的手机号');
+
+			if( $telephone ) {
+				$data['telephone'] = $telephone;
+				$my['telephone'] = $telephone;
+			}
+			if(!empty($data) && $uid){
+				if( M('user')->where(['id' => $uid])->save($data) !== false ){
+					// session('user_info' , json_encode($my));
+					$this->success('成功',U('my'));
+				}else{
+					$this->error('失败');
+				}
+			}else{
+				$this->error('参数错误');
+			}
+		}else{
+			$my  = getMyInfo();
+			$this->assign('my',$my);
+			$this->display();
+		}
+    
     }
 }
 

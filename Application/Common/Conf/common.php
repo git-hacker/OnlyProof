@@ -15,5 +15,15 @@ return array(
 			'API_Key' => 'zka0ncc3TpaGRX0m4pGLUBi9',
 			'Secret_Key' => '1nS7fIUFxLW7RF2CyPkeGAR5wV0b8Srv'
 		),
-	)
+	),
+	'lang' => array(
+		'en' => array(
+			'register_success' => 'register success',
+			'register_fail' => 'register fail'
+		),
+		'ch' => array(
+			'register_success' => '制作成功',
+			'register_fail' => '制作失败'
+		)
+	),
 );

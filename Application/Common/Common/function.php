@@ -66,42 +66,35 @@ function access_token( $type = 'qiandao')
  * @return string
  */
 function imgToBase64($img_file) {
+    var_dump($img_file);
 
     $img_base64 = '';
-    if (file_exists($img_file)) {
-        $app_img_file = $img_file; // 图片路径
-        $img_info = getimagesize($app_img_file); // 取得图片的大小，类型等
-
-        //echo '<pre>' . print_r($img_info, true) . '</pre><br>';
+    if (file_exists('.'.$img_file)) {
+        $app_img_file = '.'.$img_file; // 图片路径
         $fp = fopen($app_img_file, "r"); // 图片是否可读权限
-
         if ($fp) {
             $filesize = filesize($app_img_file);
             $content = fread($fp, $filesize);
             $file_content = chunk_split(base64_encode($content)); // base64编码
-            switch ($img_info[2]) {           //判读图片类型
-                case 1: $img_type = "gif";
-                    break;
-                case 2: $img_type = "jpg";
-                    break;
-                case 3: $img_type = "png";
-                    break;
-            }
-
-            // $img_base64 = 'data:image/' . $img_type . ';base64,' . $file_content;//合成图片的base64编码
-            $img_base64 = $file_content;//本项目中不要头信息
+            $img_base64 = $file_content; //本项目中不要头信息
         }
         fclose($fp);
     }
     return $img_base64; //返回图片的base64
-
-    
-//调用使用的方法
-// $img_dir = dirname(__FILE__) . '/uploads/img/11213223.jpg';
-// $img_base64 = imgToBase64($img_dir);
-// echo '<img src="' . $img_base64 . '">';       //图片形式展示
-// echo '<hr>';
-// echo $img_base64;           //输出Base64编码
 }
         
+//得到uid
+function getUid()
+{
+    $my = session('user_info');
+    $my = json_decode($my, true);
+    if(empty($my) || !$my['id']) return 0;
+    return $my['id'];
+}
 
+//得到用户信息
+function getMyInfo()
+{
+   $uid = getUid();
+   return M('user')->where(['id' => $uid])->find();
+}
